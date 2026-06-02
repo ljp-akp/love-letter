@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>给你的情书</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    font-family:"Arial";
+    overflow:hidden;
+}
+
+.card{
+    width:90%;
+    max-width:500px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    text-align:center;
+    animation:fadeIn 2s ease;
+}
+
+h1{
+    color:#ff4d6d;
+}
+
+p{
+    font-size:16px;
+    line-height:1.6;
+    color:#333;
+}
+
+.heart{
+    font-size:45px;
+    animation:beat 1s infinite;
+}
+
+@keyframes beat{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.3);}
+    100%{transform:scale(1);}
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* 点击提示层 */
+.overlay{
+    position:fixed;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:20px;
+    z-index:999;
+    text-align:center;
+    padding:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 点击提示 -->
+<div class="overlay" id="overlay">
+❤️ 点击屏幕开始播放我的心意
+</div>
+
+<div class="card">
+    <div class="heart">❤️</div>
+    <h1>给你的情书</h1>
+
+    <p>
+        如果你看到这里，说明我已经把心交给你了。<br><br>
+
+        我不知道未来会怎样，但我知道现在的我，<br>
+        很想把所有温柔都给你。<br><br>
+
+        有些话说不出口，就让音乐替我说吧。
+    </p>
+
+    <p style="color:#999;font-size:13px;">
+        背景音乐：[喜欢你](chatgpt://generic-entity?number=0)
+    </p>
+
+    <audio id="music" loop>
+        <!-- 这里是“喜欢你”风格音乐（可替换成你自己的mp3） -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8f7b5c2.mp3?filename=romantic-ambient-110065.mp3">
+    </audio>
+</div>
+
+<script>
+const music = document.getElementById("music");
+const overlay = document.getElementById("overlay");
+
+// 尝试自动播放（浏览器可能会拦截）
+window.addEventListener("load", () => {
+    music.play().catch(()=>{});
+});
+
+// 用户点击屏幕后强制播放（关键！）
+overlay.addEventListener("click", () => {
+    music.play();
+    overlay.style.display = "none";
+});
+
+// 任何触摸都可以启动（兼容手机）
+document.body.addEventListener("touchstart", () => {
+    music.play();
+    overlay.style.display = "none";
+}, { once:true });
+
+</script>
+
+</body>
+</html>
